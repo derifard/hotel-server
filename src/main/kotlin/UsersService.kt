@@ -4,6 +4,8 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 
+
+//Сервис пользователя
 object UsersService {
 
     fun register(email: String, password: String, name: String): User? {
