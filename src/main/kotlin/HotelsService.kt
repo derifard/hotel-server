@@ -3,6 +3,7 @@ package com.example
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
+//Сервис отелей
 object HotelsService {
 
     fun getAll(city: String? = null, maxPrice: Double? = null): List<Hotel> {
