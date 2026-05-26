@@ -7,6 +7,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import java.util.*
 
+//Подключение к бд и jwt аутентификация
 fun Application.configureSecurity() {
     val secret = environment.config.property("jwt.secret").getString()
     val issuer = environment.config.property("jwt.issuer").getString()
