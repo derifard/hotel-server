@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+//Сервис бронирований
 object BookingsService {
 
     private val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
