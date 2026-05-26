@@ -2,7 +2,6 @@ package com.example
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
-import java.time.LocalDateTime
 
 object UsersTable : Table("users") {
     val id = integer("id").autoIncrement()
