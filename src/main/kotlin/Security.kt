@@ -7,20 +7,19 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import java.util.*
 
-//Подключение к бд и jwt аутентификация
-fun Application.configureSecurity() {
-    val secret = environment.config.property("jwt.secret").getString()
-    val issuer = environment.config.property("jwt.issuer").getString()
-    val audience = environment.config.property("jwt.audience").getString()
-    val realm = environment.config.property("jwt.realm").getString()
+private const val JWT_SECRET = "my-super-secret-key-for-hotel-app-2024"
+private const val JWT_ISSUER = "hotel-app"
+private const val JWT_AUDIENCE = "hotel-app-users"
+private const val TOKEN_EXPIRATION_MS = 86400000L // 24 часа
 
+fun Application.configureSecurity() {
     install(Authentication) {
         jwt("auth-jwt") {
-            this.realm = realm
+            realm = "hotel app"
             verifier(
-                JWT.require(Algorithm.HMAC256(secret))
-                    .withAudience(audience)
-                    .withIssuer(issuer)
+                JWT.require(Algorithm.HMAC256(JWT_SECRET))
+                    .withAudience(JWT_AUDIENCE)
+                    .withIssuer(JWT_ISSUER)
                     .build()
             )
             validate { credential ->
@@ -32,15 +31,11 @@ fun Application.configureSecurity() {
 }
 
 fun generateToken(userId: Int, email: String): String {
-    val secret = "my-super-secret-key-for-hotel-app-2024"
-    val issuer = "hotel-app"
-    val audience = "hotel-app-users"
-
     return JWT.create()
-        .withAudience(audience)
-        .withIssuer(issuer)
+        .withAudience(JWT_AUDIENCE)
+        .withIssuer(JWT_ISSUER)
         .withClaim("userId", userId)
         .withClaim("email", email)
-        .withExpiresAt(Date(System.currentTimeMillis() + 86400000))
-        .sign(Algorithm.HMAC256(secret))
+        .withExpiresAt(Date(System.currentTimeMillis() + TOKEN_EXPIRATION_MS))
+        .sign(Algorithm.HMAC256(JWT_SECRET))
 }
