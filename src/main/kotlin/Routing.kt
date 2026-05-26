@@ -10,6 +10,7 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     HotelsService.seedHotels()
+    HotelsService.updateHotelImages()
 
     routing {
         get("/") {
