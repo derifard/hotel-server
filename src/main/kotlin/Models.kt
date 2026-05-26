@@ -2,6 +2,7 @@ package com.example
 
 import kotlinx.serialization.Serializable
 
+//Пользователь
 @Serializable
 data class User(
     val id: Int = 0,
