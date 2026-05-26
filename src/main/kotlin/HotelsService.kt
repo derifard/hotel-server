@@ -3,7 +3,6 @@ package com.example
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
-//Сервис отелей
 object HotelsService {
 
     fun getAll(city: String? = null, maxPrice: Double? = null): List<Hotel> {
@@ -70,6 +69,16 @@ object HotelsService {
                     "Уютный бутик-отель с авторским дизайном и отличной кухней.",
                     "Элегантный отель с бассейном, спа и панорамным рестораном."
                 )
+                val images = listOf(
+                    "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400",
+                    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
+                    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
+                    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400",
+                    "https://images.unsplash.com/photo-1551882547-ff40c4a49ce8?w=400",
+                    "https://images.unsplash.com/photo-1455587734955-081b22074882?w=400",
+                    "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400",
+                    "https://images.unsplash.com/photo-1549294413-26f195471c9b?w=400"
+                )
                 hotels.forEachIndexed { index, (name, city, country) ->
                     HotelsTable.insert {
                         it[HotelsTable.name] = name
@@ -78,8 +87,29 @@ object HotelsService {
                         it[description] = descriptions[index % descriptions.size]
                         it[pricePerNight] = (80 + index * 25).toDouble()
                         it[rating] = 3.5 + (index % 5) * 0.3
-                        it[imageUrl] = null
+                        it[imageUrl] = images[index]
                     }
+                }
+            }
+        }
+    }
+
+    fun updateHotelImages() {
+        val images = listOf(
+            "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400",
+            "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
+            "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
+            "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400",
+            "https://images.unsplash.com/photo-1551882547-ff40c4a49ce8?w=400",
+            "https://images.unsplash.com/photo-1455587734955-081b22074882?w=400",
+            "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400",
+            "https://images.unsplash.com/photo-1549294413-26f195471c9b?w=400"
+        )
+        transaction {
+            val hotels = HotelsTable.selectAll().toList()
+            hotels.forEachIndexed { index, row ->
+                HotelsTable.update({ HotelsTable.id eq row[HotelsTable.id] }) {
+                    it[imageUrl] = images[index % images.size]
                 }
             }
         }
