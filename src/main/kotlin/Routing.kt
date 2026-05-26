@@ -12,12 +12,10 @@ fun Application.configureRouting() {
     HotelsService.seedHotels()
 
     routing {
-        // Проверка что сервер работает
         get("/") {
             call.respondText("Hotel API is running!")
         }
 
-        // Регистрация
         post("/register") {
             val request = call.receive<RegisterRequest>()
             val user = UsersService.register(
@@ -36,7 +34,6 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.Created, AuthResponse(token, user))
         }
 
-        // Вход
         post("/login") {
             val request = call.receive<LoginRequest>()
             val user = UsersService.login(
@@ -54,7 +51,6 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.OK, AuthResponse(token, user))
         }
 
-        // Отели (без авторизации — можно смотреть всем)
         get("/hotels") {
             val city = call.request.queryParameters["city"]
             val maxPrice = call.request.queryParameters["maxPrice"]?.toDoubleOrNull()
@@ -76,7 +72,6 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.OK, hotel)
         }
 
-        // Защищённые маршруты — нужна авторизация
         authenticate("auth-jwt") {
 
             get("/me") {
