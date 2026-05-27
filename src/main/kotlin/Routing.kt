@@ -112,6 +112,22 @@ fun Application.configureRouting() {
                 val bookings = BookingsService.getByUser(userId)
                 call.respond(HttpStatusCode.OK, bookings)
             }
+
+            delete("/bookings/{id}") {
+                val principal = call.principal<JWTPrincipal>()
+                val userId = principal!!.payload.getClaim("userId").asInt()
+                val bookingId = call.parameters["id"]?.toIntOrNull()
+                    ?: return@delete call.respond(
+                        HttpStatusCode.BadRequest,
+                        ErrorResponse("Неверный id")
+                    )
+                val success = BookingsService.delete(userId, bookingId)
+                if (success) {
+                    call.respond(HttpStatusCode.OK, ErrorResponse("Бронирование отменено"))
+                } else {
+                    call.respond(HttpStatusCode.NotFound, ErrorResponse("Бронирование не найдено"))
+                }
+            }
         }
     }
 }
