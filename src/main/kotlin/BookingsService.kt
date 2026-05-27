@@ -4,8 +4,9 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.and
 
-//Сервис бронирований
 object BookingsService {
 
     private val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
@@ -63,6 +64,15 @@ object BookingsService {
                         totalPrice = row[BookingsTable.totalPrice]
                     )
                 }
+        }
+    }
+
+    fun delete(userId: Int, bookingId: Int): Boolean {
+        return transaction {
+            val deleted = BookingsTable.deleteWhere {
+                Op.build { (BookingsTable.id eq bookingId) and (BookingsTable.userId eq userId) }
+            }
+            deleted > 0
         }
     }
 }
