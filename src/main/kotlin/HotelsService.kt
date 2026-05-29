@@ -70,14 +70,14 @@ object HotelsService {
                     "Элегантный отель с бассейном, спа и панорамным рестораном."
                 )
                 val images = listOf(
-                    "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400",
-                    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
-                    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
-                    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400",
-                    "https://images.unsplash.com/photo-1551882547-ff40c4a49ce8?w=400",
-                    "https://images.unsplash.com/photo-1455587734955-081b22074882?w=400",
-                    "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400",
-                    "https://images.unsplash.com/photo-1549294413-26f195471c9b?w=400"
+                    "https://placehold.co/400x300/4A90E2/white?text=Paris",
+                    "https://placehold.co/400x300/E24A4A/white?text=Berlin",
+                    "https://placehold.co/400x300/4AE24A/white?text=Rome",
+                    "https://placehold.co/400x300/E2A24A/white?text=Barcelona",
+                    "https://placehold.co/400x300/4AE2E2/white?text=Amsterdam",
+                    "https://placehold.co/400x300/A24AE2/white?text=Vienna",
+                    "https://placehold.co/400x300/E24AA2/white?text=Prague",
+                    "https://placehold.co/400x300/A2E24A/white?text=Budapest"
                 )
                 hotels.forEachIndexed { index, (name, city, country) ->
                     HotelsTable.insert {
@@ -96,14 +96,14 @@ object HotelsService {
 
     fun updateHotelImages() {
         val images = listOf(
-            "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400",
-            "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
-            "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
-            "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400",
-            "https://images.unsplash.com/photo-1551882547-ff40c4a49ce8?w=400",
-            "https://images.unsplash.com/photo-1455587734955-081b22074882?w=400",
-            "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400",
-            "https://images.unsplash.com/photo-1549294413-26f195471c9b?w=400"
+            "https://placehold.co/400x300/4A90E2/white?text=Paris",
+            "https://placehold.co/400x300/E24A4A/white?text=Berlin",
+            "https://placehold.co/400x300/4AE24A/white?text=Rome",
+            "https://placehold.co/400x300/E2A24A/white?text=Barcelona",
+            "https://placehold.co/400x300/4AE2E2/white?text=Amsterdam",
+            "https://placehold.co/400x300/A24AE2/white?text=Vienna",
+            "https://placehold.co/400x300/E24AA2/white?text=Prague",
+            "https://placehold.co/400x300/A2E24A/white?text=Budapest"
         )
         transaction {
             val hotels = HotelsTable.selectAll().toList()
